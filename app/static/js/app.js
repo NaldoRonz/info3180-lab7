@@ -46,18 +46,16 @@ const Home = Vue.component('home', {
 const Upload = Vue.component('upload-form', {
    template: `
     <div class="my_form">
-      <form id = "app" action = "api/upload" enctype = "multipart/form-data" method = "post">
+      <form id="uploadForm" ref ="uploadForm" action="api/upload"  @submit.prevent="uploadPhoto" enctype="multipart/form-data" method="POST">
+      <h1>Upload Form</h1></br>
           <div class = "my_form">
-            <p>
-              <label for = "Description">Description</label>
-            </p>
-            <p>
-              <input id ="Description" v-model = "Description" type = "text">
-            </p> </br>
-            <p>
-              <input type="file" v-on:change="handleFileUpload()" key = "Photo-input">
-            </p>
-            <button v-bind:Photo="file" v-bind:Description="Description" @click="uploadPhoto"> Submit</button>
+              <label for ="Description">Description</label>
+              <textarea class="form-control" name="Description" ref="Description" v-model = "Description"></textarea></br>
+            </div>
+            <div class ="my_form">
+              <label for ="Photo_upload">Photo Upload</label></br>
+              <input type="file" name= "Photo_upload" ref="Photo_upload"></br></br>
+              <button v-bind:Photo="file" v-bind:Description="Description" @click="uploadPhoto"> Submit</button>
           </div>
         </form>  
     </div>
@@ -70,9 +68,19 @@ const Upload = Vue.component('upload-form', {
        }
     },
     methods: {
-        uploadPhoto(){          
+        uploadPhoto()
+        { 
+        let uploadForm = document.getElementById('uploadForm'); 
+        let form_data = new FormData(uploadForm); 
+
         fetch("/api/upload", {     
-          method: 'POST' })
+          method: 'POST', 
+          body: form_data,
+          headers: {         
+            'X-CSRFToken': token
+          },
+            credentials: 'same-origin'
+        })
             .then(function (response) { 
               return response.json();
               })   

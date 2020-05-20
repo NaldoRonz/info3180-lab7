@@ -6,7 +6,7 @@ This file creates your application.
 """
 
 from app import app
-from flask import render_template, request
+from flask import render_template, request, make_response
 from flask_wtf import FlaskForm
 from .forms import UploadForm
 from werkzeug.utils import secure_filename
@@ -17,18 +17,17 @@ from werkzeug.utils import secure_filename
 
 @app.route("/api/upload", methods=["POST"])
 def myUpload():
-#    my_upload = UploadForm()
-#    if request.method == "POST" and my_upload.validate_on_submit():
-#            photo = my_upload.Photo.data
-#            description = my_upload.Description.data
-#
-#           filename = secure_filename(photo.filename)
-#            photo.save(os.path.join(app.config["UPLOAD_FOLDER"],filename))
-#            return render_template('index.html', filename=filename, description=description)
-    
-#    form_errors(my_upload)
-#    return render_template('index.html', my_upload=my_upload)
+    my_upload = UploadForm()
+    if request.method == "POST" and my_upload.validate_on_submit():
+            photo = my_upload.Photo.data
+            description = my_upload.Description.data
+            filename = secure_filename(photo.filename)
+            photo.save(os.path.join(app.config["UPLOAD_FOLDER"],filename))
+            return make_response({"message":"Sucess"})
 
+    else:
+        form_errors(my_upload)
+        return make_response({"message":"Invalid Request"})
 
 
 # Please create all new routes and view functions above this route.
