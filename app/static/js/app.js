@@ -62,7 +62,6 @@ const Upload = Vue.component('upload-form', {
    `,
     data: function() {
        return {
-        message: 'File uploaded successfully',
         Photo_upload: '', 
         Description:''
        }
