@@ -6,5 +6,5 @@ from werkzeug.utils import secure_filename
 
 
 class UploadForm(FlaskForm):
-  Photo = FileField(validators=[FileRequired(), FileAllowed(["jpg","png","jpeg"])])
+  Photo_upload = FileField(validators=[FileRequired(), FileAllowed(["jpg","png","jpeg"])])
   Description = TextField(validators = [DataRequired()])
