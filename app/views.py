@@ -30,8 +30,8 @@ def myUpload():
             return make_response(result)
 
     else:
-        form_errors(my_upload)
-        return make_response({"message":"Invalid Request"})
+        my_errors = {"errors":form_errors(my_upload)}
+        return make_response(my_errors)
 
 
 # Please create all new routes and view functions above this route.
